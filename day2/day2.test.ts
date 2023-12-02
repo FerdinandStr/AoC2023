@@ -1,8 +1,12 @@
 //The game can only contain 12 red cubes 13 green cubes 14 blue cubes
 import fs from "fs"
 import {
+    Rule,
     RuleList,
-    checkHighestNumberForRule,
+    createRuleListFromInput,
+    finishGamePart2ALL,
+    finishGamePart2ONELINE,
+    getHighestNumberForRule,
     isLineValidForGivenRule,
     isLineValidForGivenRuleList,
     returnPassedGameIdsForInputAndRuleList,
@@ -23,7 +27,7 @@ describe("rgbBalls Game", () => {
         const inputLine =
             "Game 2: 3 red, 13 blue, 5 green; 14 green, 14 blue; 9 blue, 10 green, 3 red; 2 green, 5 blue; 11 green, 3 blue, 3 red; 16 blue, 2 red, 9 green"
 
-        const maxNumber = checkHighestNumberForRule(inputLine, rules.green)
+        const maxNumber = getHighestNumberForRule(inputLine, rules.green)
 
         expect(maxNumber).toBe(14)
     })
@@ -57,5 +61,36 @@ describe("rgbBalls Game", () => {
         const result = returnSumOfPassedGames(input, rules)
         console.log(result)
         expect(result).toBe(1931)
+    })
+
+    it("should create a rule List with the highest values of the input", () => {
+        const inputLine =
+            "Game 5: 3 green, 1 blue, 3 red; 6 red, 2 green, 2 blue; 12 red, 3 green, 1 blue; 2 green, 9 red; 1 blue; 2 blue, 10 red"
+
+        const ruleList = createRuleListFromInput(inputLine)
+
+        expect(ruleList).toEqual({
+            red: { color: "red", max: 12 },
+            green: { color: "green", max: 3 },
+            blue: { color: "blue", max: 2 },
+        })
+    })
+
+    it("should return the fucking result for game part 2 ONE LINE!!!!", () => {
+        //FUCK THIS SHIT
+        const inputLine = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+
+        const result = finishGamePart2ONELINE(inputLine)
+
+        expect(result).toBe(48)
+    })
+
+    it("SUMS UP ALL AND GIVES RESULT GAME2", () => {
+        let input = fs.readFileSync("./day2/input", "utf-8")
+
+        const result = finishGamePart2ALL(input)
+        console.log(result)
+
+        expect(result).toBe(83105)
     })
 })
