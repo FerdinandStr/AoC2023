@@ -1,7 +1,7 @@
 {
     "scripts": {
         "test": "jest --watchAll --verbose",
-        "dev": "tsc && node ./dist/day2/day2.js"
+        "dev": "tsc -p . --watch && node --watch ./dist/day4/day4.js"
     },
     "devDependencies": {
         "@types/jest": "^29.5.10",
