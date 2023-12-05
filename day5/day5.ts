@@ -1,4 +1,5 @@
 import { readFileSync } from "fs"
+import { PerformanceObserver, performance } from "perf_hooks"
 interface conversionData {
     rangeStart: number
     rangeEnd: number
@@ -11,16 +12,18 @@ let lowestLocation = 99999999999
 for (let i = 0; i < 20; i = i + 2) {
     const currentSeed = inputData.seeds[i]
     const seedCounter = inputData.seeds[i + 1]
-    console.log(currentSeed, seedCounter)
+    console.log("Seeds", currentSeed, seedCounter)
     for (let i = currentSeed; i < currentSeed + seedCounter; i++) {
         const location = runSeedValueToLocationWithMap(i, inputData.map)
-        console.log("new seed", i)
+        // console.log("new seed", i)
         if (location < lowestLocation) {
-            console.log("newLow", location)
+            // console.log("newLow", location)
             lowestLocation = location
         }
     }
 }
+
+//part1
 // inputData.seeds.forEach((seed) => {
 //     const location = runSeedValueToLocationWithMap(seed, inputData.map)
 //     if (location < lowestLocation) {
@@ -43,32 +46,32 @@ export function convertInputData() {
     return { seeds: seeds, map: step2 }
 }
 
-export function checkIfNumberIsInRange(row: number[], seed: number) {
-    const { rangeStart, rangeEnd } = turnRowDataIntoObject(row)
+export function checkIfNumberIsInRange(rangeStart: number, rangeEnd: number, seed: number) {
     if (seed >= rangeStart && seed <= rangeEnd) {
         return true
     }
     return false
 }
 
-export function convertNumberWithRowData(row: number[], seed: number) {
-    const { targetDifference } = turnRowDataIntoObject(row)
+export function convertNumberWithRowData(targetDifference: number, seed: number) {
     return seed + targetDifference
 }
 
 export function runSeedValueToLocationWithMap(seed: number, map: number[][][]) {
     let nextValue = seed
     map.forEach((conversionList) => {
-        let hasMatchForList = false
-        conversionList.forEach((rowData) => {
-            const conversionData = turnRowDataIntoObject(rowData)
-            if (checkIfNumberIsInRange(rowData, nextValue) && !hasMatchForList) {
-                nextValue = convertNumberWithRowData(rowData, nextValue)
+        for (let i = 0; i < conversionList.length; i++) {
+            const rowData = conversionList[i]
+            const rangeStart = rowData[1]
+            const rangeEnd = rowData[1] + rowData[2] - 1
+            const targetDifference = rowData[0] - rowData[1]
+
+            if (checkIfNumberIsInRange(rangeStart, rangeEnd, nextValue)) {
+                nextValue = convertNumberWithRowData(targetDifference, nextValue)
                 // console.log("CONVERTABLE", conversionData, rowData, nextValue)
-                hasMatchForList = true
-                return
+                break
             }
-        })
+        }
     })
 
     return nextValue
