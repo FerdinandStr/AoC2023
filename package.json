@@ -2,7 +2,7 @@
     "scripts": {
         "test": "jest --watchAll --verbose",
         "tsc": "tsc -p . --watch",
-        "dev": "node --watch ./dist/day4/day4.js"
+        "dev": "node --watch ./dist/day5/day5.js"
     },
     "devDependencies": {
         "@types/jest": "^29.5.10",
