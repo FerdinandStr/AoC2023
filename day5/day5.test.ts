@@ -6,6 +6,7 @@ import {
     convertInputData,
     convertNumberWithRowData,
     runSeedValueToLocationWithMap,
+    turnRowDataIntoObject,
 } from "./day5"
 
 // seed to soil
@@ -18,14 +19,16 @@ describe("seed locator", () => {
     const map = inputData.map
 
     it("checks if the seed (number) is in range of the row values", () => {
-        let isInRange = checkIfNumberIsInRange([50, 98, 1], seed)
+        const { rangeStart, rangeEnd } = turnRowDataIntoObject(rowData)
+        let isInRange = checkIfNumberIsInRange(rangeStart, rangeEnd, seed)
         expect(isInRange).toBe(false)
-        isInRange = checkIfNumberIsInRange(rowData, seed)
+        isInRange = checkIfNumberIsInRange(rangeStart, rangeEnd, seed)
         expect(isInRange).toBe(true)
     })
 
     it("converts the seed (number) to the next target number", () => {
-        const newNumber = convertNumberWithRowData(rowData, 81)
+        const { targetDifference } = turnRowDataIntoObject(rowData)
+        const newNumber = convertNumberWithRowData(targetDifference, 81)
 
         expect(newNumber).toBe(nextValue)
     })

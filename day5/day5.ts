@@ -77,7 +77,7 @@ export function runSeedValueToLocationWithMap(seed: number, map: number[][][]) {
     return nextValue
 }
 
-function turnRowDataIntoObject(row: number[]): conversionData {
+export function turnRowDataIntoObject(row: number[]): conversionData {
     const rowData: conversionData = {
         rangeStart: row[1],
         rangeEnd: row[1] + row[2] - 1,
