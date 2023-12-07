@@ -9,19 +9,20 @@ interface conversionData {
 const inputData = convertInputData()
 let lowestLocation = 99999999999
 
-for (let i = 0; i < 20; i = i + 2) {
-    const currentSeed = inputData.seeds[i]
-    const seedCounter = inputData.seeds[i + 1]
-    console.log("Seeds", currentSeed, seedCounter)
-    for (let i = currentSeed; i < currentSeed + seedCounter; i++) {
-        const location = runSeedValueToLocationWithMap(i, inputData.map)
-        // console.log("new seed", i)
-        if (location < lowestLocation) {
-            // console.log("newLow", location)
-            lowestLocation = location
-        }
-    }
-}
+//PART TO REALLY LONG RUNTIME
+// for (let i = 0; i < 20; i = i + 2) {
+//     const currentSeed = inputData.seeds[i]
+//     const seedCounter = inputData.seeds[i + 1]
+//     console.log("Seeds", currentSeed, seedCounter)
+//     for (let i = currentSeed; i < currentSeed + seedCounter; i++) {
+//         const location = runSeedValueToLocationWithMap(i, inputData.map)
+//         // console.log("new seed", i)
+//         if (location < lowestLocation) {
+//             // console.log("newLow", location)
+//             lowestLocation = location
+//         }
+//     }
+// }
 
 //part1
 // inputData.seeds.forEach((seed) => {
@@ -36,7 +37,7 @@ console.log("LOWEST LOCATION", lowestLocation)
 // REAL INPUT DATA GOLDEN WITH LOWEST LOCATION 174137457
 
 export function convertInputData() {
-    let input_win = readFileSync("./day5/input", "utf-8").split(/\n\s*\n.*\n/)
+    let input_win = readFileSync("./day5/input_test", "utf-8").split(/\n\s*\n.*\n/)
     const seeds = input_win[0]
         .slice(7)
         .split(" ")

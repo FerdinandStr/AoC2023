@@ -1,6 +1,5 @@
 // start with seed 79
 
-import { readFileSync } from "fs"
 import {
     checkIfNumberIsInRange,
     convertInputData,
@@ -11,9 +10,8 @@ import {
 import { describe, expect, it } from "../node_modules/vitest/dist/index"
 
 // seed to soil
-const rowData = [18, 25, 70]
+const rowData = [52, 50, 48]
 const seed = 79
-const nextValue = 74
 
 describe("seed locator", () => {
     const inputData = convertInputData()
@@ -21,7 +19,7 @@ describe("seed locator", () => {
 
     it("checks if the seed (number) is in range of the row values", () => {
         const { rangeStart, rangeEnd } = turnRowDataIntoObject(rowData)
-        let isInRange = checkIfNumberIsInRange(rangeStart, rangeEnd, seed)
+        let isInRange = checkIfNumberIsInRange(rangeStart, rangeEnd, 2)
         expect(isInRange).toBe(false)
         isInRange = checkIfNumberIsInRange(rangeStart, rangeEnd, seed)
         expect(isInRange).toBe(true)
@@ -29,9 +27,9 @@ describe("seed locator", () => {
 
     it("converts the seed (number) to the next target number", () => {
         const { targetDifference } = turnRowDataIntoObject(rowData)
-        const newNumber = convertNumberWithRowData(targetDifference, 81)
+        const newNumber = convertNumberWithRowData(targetDifference, seed)
 
-        expect(newNumber).toBe(nextValue)
+        expect(newNumber).toBe(81)
     })
 
     it("can run a seed trough all conversions with multiple rows", () => {
