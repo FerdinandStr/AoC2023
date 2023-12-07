@@ -12,6 +12,7 @@ import {
     returnPassedGameIdsForInputAndRuleList,
     returnSumOfPassedGames,
 } from "./day2"
+import { describe, expect, it } from "../node_modules/vitest/dist/index"
 
 describe("rgbBalls Game", () => {
     const rules: RuleList = {

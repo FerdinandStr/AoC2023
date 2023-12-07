@@ -8,6 +8,7 @@ import {
     runSeedValueToLocationWithMap,
     turnRowDataIntoObject,
 } from "./day5"
+import { describe, expect, it } from "../node_modules/vitest/dist/index"
 
 // seed to soil
 const rowData = [18, 25, 70]
