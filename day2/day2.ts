@@ -113,9 +113,9 @@ function finishGamePart2ALL(inputData: string) {
     return inputArray.reduce((acc, el) => acc + finishGamePart2ONELINE(el), 0)
 }
 
+export type { RuleList, Rule }
+
 export {
-    RuleList,
-    Rule,
     createRuleListFromInput,
     getHighestNumberForRule,
     isLineValidForGivenRule,

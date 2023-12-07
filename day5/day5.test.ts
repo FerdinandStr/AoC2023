@@ -1,5 +1,6 @@
 // start with seed 79
 
+import { assert, describe, expect, it, should } from "vitest"
 import {
     checkIfNumberIsInRange,
     convertInputData,
@@ -7,7 +8,6 @@ import {
     runSeedValueToLocationWithMap,
     turnRowDataIntoObject,
 } from "./day5"
-import { describe, expect, it } from "../node_modules/vitest/dist/index"
 
 // seed to soil
 const rowData = [52, 50, 48]
