@@ -1,5 +1,3 @@
-import exp from "constants"
-
 const cardMap = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
 
 enum HandTypeEnum {
@@ -16,14 +14,39 @@ interface HandInfo {
     hand: string
     intHand: number[]
     handType: HandTypeEnum
+    bid: number
 }
 
 export function convertHandToIntHand(hand: string) {
     return hand.split("").map((el) => cardMap.indexOf(el))
 }
 
-export function convertHandToHandInfo(hand: string): HandInfo {
-    return { hand, intHand: convertHandToIntHand(hand), handType: determineHandType(hand) }
+export function convertRowDataToHandInfo(rowData: string): HandInfo {
+    const [hand, bid] = rowData.split(" ")
+    return { hand, intHand: convertHandToIntHand(hand), handType: determineHandType(hand), bid: Number(bid) }
+}
+
+export function orderHandInfoList(handInfoList: HandInfo[]) {
+    return handInfoList.sort((a, b) => {
+        if (a.handType == b.handType) {
+            let handOrderIfSimilar = 0
+            for (let i = 0; i < a.intHand.length; i++) {
+                if (a.intHand[i] != b.intHand[i]) {
+                    handOrderIfSimilar = a.intHand[i] - b.intHand[i]
+                    break
+                }
+            }
+            return handOrderIfSimilar
+        } else {
+            return a.handType - b.handType
+        }
+    })
+}
+
+export function calculateWinnings(handInfoList: HandInfo[]) {
+    return handInfoList.reduce((acc, el, i) => {
+        return acc + el.bid * (i + 1)
+    }, 0)
 }
 
 export function determineHandType(hand: string) {
@@ -36,13 +59,12 @@ export function determineHandType(hand: string) {
         cardCount[value] = cardCount[value] + 1
     }
 
-    console.log(cardCount)
+    // console.log(cardCount)
     let strongestType = HandTypeEnum.HighCard
 
     for (let count of cardCount) {
         switch (count) {
             case 5:
-                console.log("FIVEOF A KIND")
                 strongestType = HandTypeEnum.FiveOfAKind
                 break
             case 4:
@@ -72,14 +94,6 @@ export function determineHandType(hand: string) {
         }
     }
     return strongestType
-
-    // switch (hand) {
-    //     case sortedHand.reduce((result, card, i) => card == sortedHand[i - 1], false):
-    //         break
-
-    //     default:
-    //         break
-    // }
 }
 
 export type { HandInfo }
