@@ -15,7 +15,7 @@ let testData = [
 checkGears()
 
 function checkGears() {
-    let input = readFileSync("./day3/input", "utf-8").split("\n")
+    let input = readFileSync("./src/day3/input", "utf-8").split("\n")
     testData = input
 
     let allGearRatios: number[] = []
@@ -86,7 +86,7 @@ function isPartTouchingGear(partInfo: Part, partList: Part[]) {
 }
 
 function checkEngineData() {
-    let input = readFileSync("./day3/input", "utf-8").split("\n")
+    let input = readFileSync("./src/day3/input", "utf-8").split("\n")
     testData = input
 
     let allValidParts: Part[] = []

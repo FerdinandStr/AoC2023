@@ -3,8 +3,8 @@ import { readFileSync } from "fs"
 calculatePoints()
 
 function calculatePoints() {
-    const input_win = readFileSync("./day4/input_win", "utf-8").split("\n")
-    const input_luck = readFileSync("./day4/input_luck", "utf-8").split("\n")
+    const input_win = readFileSync("./src/day4/input_win", "utf-8").split("\n")
+    const input_luck = readFileSync("./src/day4/input_luck", "utf-8").split("\n")
 
     const winArray = input_win.map(splitNumbers)
     const luckArray = input_luck.map(splitNumbers)

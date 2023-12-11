@@ -37,7 +37,7 @@ console.log("LOWEST LOCATION", lowestLocation)
 // REAL INPUT DATA GOLDEN WITH LOWEST LOCATION 174137457
 
 export function convertInputData() {
-    let input_win = readFileSync("./day5/input_test", "utf-8").split(/\n\s*\n.*\n/)
+    let input_win = readFileSync("./src/day5/input_test", "utf-8").split(/\n\s*\n.*\n/)
     const seeds = input_win[0]
         .slice(7)
         .split(" ")

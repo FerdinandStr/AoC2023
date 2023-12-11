@@ -50,14 +50,14 @@ describe("rgbBalls Game", () => {
     })
 
     it("should iterate over input and return line numbers for passed games", () => {
-        let input = fs.readFileSync("./day2/input", "utf-8")
+        let input = fs.readFileSync("./src/day2/input", "utf-8")
 
         const result = returnPassedGameIdsForInputAndRuleList(input, rules)
         expect(result).toBeInstanceOf(Array)
     })
 
     it("should sum up all the correct games", () => {
-        let input = fs.readFileSync("./day2/input", "utf-8")
+        let input = fs.readFileSync("./src/day2/input", "utf-8")
 
         const result = returnSumOfPassedGames(input, rules)
         console.log(result)
@@ -87,7 +87,7 @@ describe("rgbBalls Game", () => {
     })
 
     it("SUMS UP ALL AND GIVES RESULT GAME2", () => {
-        let input = fs.readFileSync("./day2/input", "utf-8")
+        let input = fs.readFileSync("./src/day2/input", "utf-8")
 
         const result = finishGamePart2ALL(input)
         console.log(result)
