@@ -24,17 +24,17 @@ function loopOverInput() {
 
     let step = 0
 
-    while (position != end) {
-        const foundPos = input.find((el) => Object.keys(el)[0] == position)
-        console.log("POS", foundPos[position])
-        let next_direction = direction[step % direction.length] == "R" ? 1 : 0
-        console.log("next dir:", next_direction)
-        console.log("POS", foundPos[position])
-        position = foundPos[position][next_direction]
+    // while (position != end) {
+    //     const foundPos = input.find((el) => Object.keys(el)[0] == position)
+    //     console.log("POS", foundPos[position])
+    //     let next_direction = direction[step % direction.length] == "R" ? 1 : 0
+    //     console.log("next dir:", next_direction)
+    //     console.log("POS", foundPos[position])
+    //     position = foundPos[position][next_direction]
 
-        console.log("POSITION", position)
-        step += 1
-    }
+    //     console.log("POSITION", position)
+    //     step += 1
+    // }
 
     console.log("steps:", step)
 
