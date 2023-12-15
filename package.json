@@ -3,7 +3,7 @@
     "scripts": {
         "test": "vitest",
         "tsc": "tsc -p . --watch",
-        "dev": "node --watch ./dist/day11/day11.js"
+        "dev": "node --watch ./dist/day15/day15.js"
     },
     "devDependencies": {
         "@types/node": "^20.10.2",
