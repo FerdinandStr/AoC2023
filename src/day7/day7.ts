@@ -1,4 +1,4 @@
-const cardMap = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+const cardMap = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
 
 enum HandTypeEnum {
     HighCard = 1,
@@ -24,6 +24,11 @@ export function convertHandToIntHand(hand: string) {
 export function convertRowDataToHandInfo(rowData: string): HandInfo {
     const [hand, bid] = rowData.split(" ")
     return { hand, intHand: convertHandToIntHand(hand), handType: determineHandType(hand), bid: Number(bid) }
+}
+
+export function convertRowDataToHandInfoWithJokers(rowData: string): HandInfo {
+    const [hand, bid] = rowData.split(" ")
+    return { hand, intHand: convertHandToIntHand(hand), handType: determineHandTypeWithJokers(hand), bid: Number(bid) }
 }
 
 export function orderHandInfoList(handInfoList: HandInfo[]) {
@@ -93,6 +98,104 @@ export function determineHandType(hand: string) {
                 break
         }
     }
+    return strongestType
+}
+
+export function determineHandTypeWithJokers(hand: string) {
+    console.log("HAND", hand)
+    const intHand = convertHandToIntHand(hand)
+    const sortedHand = intHand.sort((a, b) => b - a)
+    // console.log("SORTED HAND", sortedHand)
+    let cardCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    for (let value of sortedHand) {
+        cardCount[value] = cardCount[value] + 1
+    }
+
+    // console.log("CARD COUNT", cardCount)
+    let strongestType = HandTypeEnum.HighCard
+
+    const jokerCount = cardCount[0]
+
+    const updateStrongestType = (newType: HandTypeEnum) => {
+        console.log("UPDATE", strongestType, newType > strongestType ? newType : strongestType)
+        return newType > strongestType ? newType : strongestType
+    }
+
+    cardCount.forEach((count, cardInt) => {
+        // let countWithJoker = count
+        // if(jokerCount > 0 && cardInt != 0){
+        //     countWithJoker = count + jokerCount
+        // }
+
+        switch (count) {
+            case 5:
+                strongestType = updateStrongestType(HandTypeEnum.FiveOfAKind)
+                break
+            case 4:
+                strongestType = updateStrongestType(HandTypeEnum.FourOfAKind)
+                if (jokerCount > 0) {
+                    strongestType = updateStrongestType(HandTypeEnum.FiveOfAKind)
+                }
+                break
+            case 3:
+                //Check Fullhouse 2
+                if (jokerCount == 3) {
+                    break
+                }
+                if (jokerCount == 2) {
+                    strongestType = updateStrongestType(HandTypeEnum.FiveOfAKind)
+                }
+                if (cardCount.includes(2) && jokerCount == 3) {
+                    strongestType = updateStrongestType(HandTypeEnum.FiveOfAKind)
+                }
+                if (cardCount.includes(2)) {
+                    strongestType = updateStrongestType(HandTypeEnum.FullHouse)
+                } else {
+                    //Only ThreeOfAKind
+                    strongestType = updateStrongestType(HandTypeEnum.ThreeOfAKind)
+                    if (jokerCount > 0) {
+                        strongestType = updateStrongestType(HandTypeEnum.ThreeOfAKind + 1 + jokerCount)
+                    }
+                }
+                break
+            case 2:
+                if (jokerCount == 2) {
+                    break
+                }
+
+                if (cardCount.indexOf(2) != cardCount.lastIndexOf(2) && jokerCount != 2) {
+                    strongestType = updateStrongestType(HandTypeEnum.TwoPair)
+                    if (jokerCount > 0) {
+                        strongestType = updateStrongestType(HandTypeEnum.FullHouse)
+                    }
+                } else {
+                    strongestType = updateStrongestType(HandTypeEnum.OnePair)
+                    if (jokerCount == 1) {
+                        strongestType = updateStrongestType(HandTypeEnum.ThreeOfAKind)
+                    }
+                    if (jokerCount == 2) {
+                        strongestType = updateStrongestType(HandTypeEnum.FourOfAKind)
+                    }
+                    if (jokerCount == 3) {
+                        strongestType = updateStrongestType(HandTypeEnum.FiveOfAKind)
+                    }
+                }
+                break
+            case 1:
+                strongestType = updateStrongestType(HandTypeEnum.HighCard)
+                if (jokerCount == 1) {
+                    strongestType = updateStrongestType(HandTypeEnum.OnePair)
+                }
+                if (jokerCount == 2) {
+                    strongestType = updateStrongestType(HandTypeEnum.ThreeOfAKind)
+                }
+                if (jokerCount == 3) {
+                    strongestType = updateStrongestType(HandTypeEnum.FourOfAKind)
+                }
+                break
+        }
+    })
     return strongestType
 }
 

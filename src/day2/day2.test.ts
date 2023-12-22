@@ -60,7 +60,7 @@ describe("rgbBalls Game", () => {
         let input = fs.readFileSync("./src/day2/input", "utf-8")
 
         const result = returnSumOfPassedGames(input, rules)
-        console.log(result)
+        // console.log(result)
         expect(result).toBe(1931)
     })
 
@@ -90,7 +90,7 @@ describe("rgbBalls Game", () => {
         let input = fs.readFileSync("./src/day2/input", "utf-8")
 
         const result = finishGamePart2ALL(input)
-        console.log(result)
+        // console.log(result)
 
         expect(result).toBe(83105)
     })
